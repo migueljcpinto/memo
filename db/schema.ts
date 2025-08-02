@@ -1,9 +1,11 @@
+import { relations } from "drizzle-orm";
 import {
 	pgTable,
 	text,
 	timestamp,
 	boolean,
 	integer,
+	jsonb,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -66,9 +68,61 @@ export const verification = pgTable("verification", {
 	),
 });
 
+export const memobooks = pgTable("memobooks", {
+	id: text("id").primaryKey(),
+	name: text("name").notNull(),
+	createdAt: timestamp("created_at")
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
+	updatedAt: timestamp("updated_at")
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
+	userId: text("user_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+});
+
+export const memobookRelations = relations(memobooks, ({many, one}) => ({
+	memos: many(memos),
+	user: one(user, {	fields: [memobooks.userId],
+		references: [user.id],
+	}),
+}));
+
+export type Memobook = typeof memobooks.$inferSelect;
+export type MemobookInsert = typeof memobooks.$inferInsert;
+
+export const memos = pgTable("memos", {
+	id: text("id").primaryKey(),
+	title: text("title").notNull(),
+	content: jsonb("content").notNull(),
+	createdAt: timestamp("created_at")
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
+	updatedAt: timestamp("updated_at")
+		.$defaultFn(() => /* @__PURE__ */ new Date())
+		.notNull(),
+	memobookId: text("memobook_id")
+		.notNull()
+		.references(() => memobooks.id, { onDelete: "cascade" }),
+});
+
+export const memoRelations = relations(memos, ({one}) => ({
+	memobook: one(memobooks, {
+		fields: [memos.memobookId],
+		references: [memobooks.id],
+	}),
+}));
+
+export type Memo = typeof memos.$inferSelect;
+
+
+
 export const schema = {
 	user,
 	session,
 	account,
+	memobooks,
+	memos,
 	verification,
 };
