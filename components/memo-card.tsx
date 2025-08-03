@@ -1,11 +1,11 @@
 "use client"
 
-import { Memobook } from "@/db/schema";
+import { Memo } from "@/db/schema";
 import { Loader2, Trash2 } from "lucide-react";
 import Link from "next/dist/client/link";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
-import { deleteMemobook } from "@/server/memobooks";
+import { deleteMemo } from "@/server/memos";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,11 +21,11 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-interface MemoBookCardProps {
-    memobook: Memobook
+interface MemoCardProps {
+    memo: Memo
 }
 
-export default function MemoBookCard({ memobook }: MemoBookCardProps) {
+export default function MemoCard({ memo }: MemoCardProps) {
     const router = useRouter();
     const [isDeleting, setIsDeleting] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -33,13 +33,13 @@ export default function MemoBookCard({ memobook }: MemoBookCardProps) {
     const handleDelete = async () => {
         try {
             setIsDeleting(true);
-            const response = await deleteMemobook(memobook.id);
+            const response = await deleteMemo(memo.id);
             if (response.success) {
-                toast.success("Memobook deleted successfully");
+                toast.success("Memo deleted successfully");
                 router.refresh();
             }
         } catch {
-            toast.error("Failed to delete memobook");
+            toast.error("Failed to delete memo");
         } finally {
             setIsDeleting(false);
             setIsOpen(false);
@@ -49,13 +49,12 @@ export default function MemoBookCard({ memobook }: MemoBookCardProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{memobook.name}</CardTitle>
+                <CardTitle>{memo.title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <p>{memobook.memos?.length ?? 0} memos</p>
             </CardContent>
             <CardFooter className="justify-end flex gap-2">
-                <Link href={`/dashboard/memobook/${memobook.id}`}>
+                <Link href={`/dashboard/memobook/${memo.memobookId}/memo/${memo.id}`}>
                     <Button variant="outline">View</Button>
                 </Link>
                 <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -68,7 +67,7 @@ export default function MemoBookCard({ memobook }: MemoBookCardProps) {
                         <AlertDialogHeader>
                             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your memobook and remove all its memos.
+                                This action cannot be undone. This will permanently delete your memo and remove all its memos.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -77,6 +76,7 @@ export default function MemoBookCard({ memobook }: MemoBookCardProps) {
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
+
             </CardFooter>
         </Card>
     )

@@ -6,7 +6,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { useScroll } from "motion/react";
 import Image from "next/image";
-import { ModeToggle } from "./mode-toggle";
+import { ModeSwitcher } from "./mode-switcher";
 
 const menuItems: { name: string; href: string }[] = [];
 
@@ -111,7 +111,7 @@ export const HeroHeader = () => {
 
 
                                 </div>
-                                <ModeToggle />
+                                <ModeSwitcher />
                                 <Button asChild variant="outline" size="sm">
                                     <Link href="/login">
                                         <span>Login</span>

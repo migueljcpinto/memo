@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { TextEffect } from "@/components/ui/text-effect";
 import { AnimatedGroup } from "@/components/ui/animated-group";
 import { HeroHeader } from "./header";
@@ -36,7 +35,7 @@ export default function HeroSection() {
                 </div>
                 <section>
                     <div className="relative pt-24">
-                        <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
+                        <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]"></div>
                         <div className="mx-auto max-w-5xl px-6">
                             <div className="sm:mx-auto lg:mr-auto lg:mt-0">
                                 <TextEffect
@@ -45,7 +44,7 @@ export default function HeroSection() {
                                     as="h1"
                                     className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16"
                                 >
-                                    📝 Memo: Smarter Notes for Developers.
+                                    🔥 Forge Smarter Memos. Code Better.
                                 </TextEffect>
                                 <TextEffect
                                     per="line"
@@ -55,7 +54,9 @@ export default function HeroSection() {
                                     as="p"
                                     className="mt-8 max-w-2xl text-pretty text-lg"
                                 >
-                                    Boost your productivity with Memo — effortlessly capture, organize, and connect your developer notes, code, and ideas in one place.
+                                    Supercharge your workflow with Memo — the smartest way to
+                                    capture, organize, and link dev memos, code snippets, and
+                                    technical insights.
                                 </TextEffect>
 
                                 <AnimatedGroup
@@ -82,49 +83,13 @@ export default function HeroSection() {
                                             className="rounded-xl px-5 text-base"
                                         >
                                             <Link href="/dashboard">
-                                                <span className="text-nowrap">Start with Memo</span>
+                                                <span className="text-nowrap">Start Memoing</span>
                                             </Link>
                                         </Button>
                                     </div>
                                 </AnimatedGroup>
                             </div>
                         </div>
-                        <AnimatedGroup
-                            variants={{
-                                container: {
-                                    visible: {
-                                        transition: {
-                                            staggerChildren: 0.05,
-                                            delayChildren: 0.75,
-                                        },
-                                    },
-                                },
-                                ...transitionVariants,
-                            }}
-                        >
-                            <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
-                                <div
-                                    aria-hidden
-                                    className="bg-linear-to-b to-background absolute inset-0 z-10 from-transparent from-35%"
-                                />
-                                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-5xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                                    <Image
-                                        className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                                        src="/dark.png"
-                                        alt="app screen"
-                                        width="2700"
-                                        height="1440"
-                                    />
-                                    <Image
-                                        className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                                        src="/light.png"
-                                        alt="app screen"
-                                        width="2700"
-                                        height="1440"
-                                    />
-                                </div>
-                            </div>
-                        </AnimatedGroup>
                     </div>
                 </section>
             </main>

@@ -46,8 +46,8 @@ export async function AppSidebar({
         </React.Suspense>
       </SidebarHeader>
       <SidebarContent className="gap-0">
-        {/*  <SidebarData data={data} />
- */}      </SidebarContent>
+        <SidebarData data={data} />
+      </SidebarContent>
       <SidebarRail />
     </Sidebar>
   );
