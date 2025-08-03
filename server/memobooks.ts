@@ -1,15 +1,15 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import {  MemobookInsert, memobooks } from "@/db/schema";
+import { InsertMemobook, memobooks } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 
-export const createMemobook = async (values: MemobookInsert) => {
+export const createMemobook = async (values: InsertMemobook) => {
     try {
         await db.insert(memobooks).values(values);
-        return { success: true, message: "memobook created successfully" };
+        return { success: true, message: "Memobook created successfully" };
     } catch {
         return { success: false, message: "Failed to create memobook" };
     }
@@ -55,10 +55,10 @@ export const getMemobookById = async (id: string) => {
     }
 };
 
-export const updateMemobook = async (id: string, values: MemobookInsert) => {
+export const updateMemobook = async (id: string, values: InsertMemobook) => {
     try {
         await db.update(memobooks).set(values).where(eq(memobooks.id, id));
-        return { success: true, message: "memobook updated successfully" };
+        return { success: true, message: "Memobook updated successfully" };
     } catch {
         return { success: false, message: "Failed to update memobook" };
     }
@@ -67,7 +67,7 @@ export const updateMemobook = async (id: string, values: MemobookInsert) => {
 export const deleteMemobook = async (id: string) => {
     try {
         await db.delete(memobooks).where(eq(memobooks.id, id));
-        return { success: true, message: "memobook deleted successfully" };
+        return { success: true, message: "Memobook deleted successfully" };
     } catch {
         return { success: false, message: "Failed to delete memobook" };
     }
