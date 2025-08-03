@@ -22,6 +22,7 @@
     "@react-email/components": "^0.3.3",
     "@tiptap/extension-bullet-list": "^3.0.9",
     "@tiptap/extension-document": "^3.0.9",
+    "@tiptap/extension-link": "^3.0.9",
     "@tiptap/extension-ordered-list": "^3.0.9",
     "@tiptap/extension-paragraph": "^3.0.9",
     "@tiptap/extension-subscript": "^3.0.9",
