@@ -1,4 +1,5 @@
 import { CreateMemobookButton } from "@/components/create-memobook-button";
+import MemoBookCard from "@/components/memobook-card";
 import { PageWrapper } from "@/components/page-wrapper";
 import { getMemobooks } from "@/server/memobooks";
 
@@ -14,10 +15,7 @@ export default async function Page() {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {memobooks.success ?
                     memobooks?.memobooks?.map((memobook) => (
-                        <div key={memobook.id} className="p-4 border rounded-lg">
-                            <h2 className="text-lg font-semibold">{memobook.name}</h2>
-
-                        </div>
+                        <MemoBookCard key={memobook.id} memobook={memobook} />
                     ))
                     : (
                         <div>No memobooks found</div>

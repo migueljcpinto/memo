@@ -11,7 +11,7 @@ export default async function MemoPage({ params }: { params: Params }) {
     const { memoId } = params;
     const { memo } = await getMemoById(memoId);
     return (
-        <PageWrapper breadcrumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: memo?.title ?? "Memo", href: `/dashboard/memo/${memoId}` }]}>
+        <PageWrapper breadcrumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: memo?.memobook?.name ?? "Memobook", href: `/dashboard/memobook/${memo?.memobook?.id}` }, { label: memo?.title ?? "Memo", href: `/dashboard/memo/${memoId}` }]}>
             <h1>{memo?.title}</h1>
             <RichTextEditor content={memo?.content as JSONContent[]} memoId={memoId} />
         </PageWrapper>
