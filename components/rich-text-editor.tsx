@@ -10,6 +10,14 @@ import StarterKit from "@tiptap/starter-kit";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
+import UnderlineExtension from "@tiptap/extension-underline";
+import LinkExtension from "@tiptap/extension-link";
+import SuperscriptExtension from "@tiptap/extension-superscript";
+import SubscriptExtension from "@tiptap/extension-subscript";
+import TextAlignExtension from "@tiptap/extension-text-align";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
+import ListItem from "@tiptap/extension-list-item";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -32,7 +40,6 @@ import {
     AlignCenter,
     AlignRight,
     AlignJustify,
-    Plus,
     ChevronDown,
     Superscript,
     Subscript,
@@ -46,7 +53,20 @@ interface RichTextEditorProps {
 
 const RichTextEditor = ({ content, memoId }: RichTextEditorProps) => {
     const editor = useEditor({
-        extensions: [StarterKit, Document, Paragraph, Text],
+        extensions: [
+            StarterKit,
+            Document,
+            Paragraph,
+            Text,
+            UnderlineExtension,
+            LinkExtension,
+            SuperscriptExtension,
+            SubscriptExtension,
+            TextAlignExtension.configure({ types: ["heading", "paragraph"] }),
+            BulletList,
+            OrderedList,
+            ListItem,
+        ],
         immediatelyRender: false,
         autofocus: true,
         editable: true,
@@ -311,7 +331,11 @@ const RichTextEditor = ({ content, memoId }: RichTextEditorProps) => {
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => editor?.chain().focus().toggleUnderline().run()}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive("underline")
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <Underline className="h-4 w-4" />
                 </Button>
@@ -322,21 +346,37 @@ const RichTextEditor = ({ content, memoId }: RichTextEditorProps) => {
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => {
+                        const url = prompt("Enter URL:");
+                        if (url) editor?.chain().focus().setLink({ href: url }).run();
+                        else editor?.chain().focus().unsetLink().run();
+                    }}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive("link")
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <Link className="h-4 w-4" />
                 </Button>
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => editor?.chain().focus().toggleSuperscript?.().run()}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive("superscript")
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <Superscript className="h-4 w-4" />
                 </Button>
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => editor?.chain().focus().toggleSubscript?.().run()}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive("subscript")
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <Subscript className="h-4 w-4" />
                 </Button>
@@ -347,44 +387,50 @@ const RichTextEditor = ({ content, memoId }: RichTextEditorProps) => {
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => editor?.chain().focus().setTextAlign?.("left").run()}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive({ textAlign: "left" })
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <AlignLeft className="h-4 w-4" />
                 </Button>
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => editor?.chain().focus().setTextAlign?.("center").run()}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive({ textAlign: "center" })
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <AlignCenter className="h-4 w-4" />
                 </Button>
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => editor?.chain().focus().setTextAlign?.("right").run()}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive({ textAlign: "right" })
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <AlignRight className="h-4 w-4" />
                 </Button>
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-accent"
+                    onClick={() => editor?.chain().focus().setTextAlign?.("justify").run()}
+                    className={`size-8 p-0 hover:bg-accent ${editor?.isActive({ textAlign: "justify" })
+                        ? "bg-accent text-accent-foreground"
+                        : "text-muted-foreground hover:text-foreground"
+                        }`}
                 >
                     <AlignJustify className="h-4 w-4" />
                 </Button>
 
                 {/* Spacer */}
                 <div className="flex-1" />
-
-                {/* Add Button */}
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-8 px-2 text-muted-foreground hover:text-foreground hover:bg-accent gap-1"
-                >
-                    <Plus className="h-4 w-4" />
-                    Add
-                </Button>
             </div>
 
             {/* Editor Content */}
