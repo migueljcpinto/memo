@@ -1,3 +1,4 @@
+import { NotebookPen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,7 +11,7 @@ export default function Footer() {
                     aria-label="go home"
                     className="mx-auto size-fit flex items-center gap-2"
                 >
-                    <Image src="/memo-logo.png" alt="logo" width={60} height={60} />
+                    <NotebookPen />
 
                     <span className="text-2xl font-bold">Memo</span>
                 </Link>
